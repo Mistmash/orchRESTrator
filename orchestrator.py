@@ -2,6 +2,13 @@ import requests
 import schedule
 import time
 import threading
+import json
+import os
+import pprint
+#import Agent
+#import Job
+
+config_path = os.path.dirname(os.path.realpath(__file__)) + "\config.json"
 
 
 def job(agentID):
@@ -11,7 +18,7 @@ def job(agentID):
     print(r.status_code)
     print(r.text)
     print("Thread: %s" % threading.current_thread())
-    # print(r.json)
+    print(r.json)
 
 
 def run_threaded(job_func):
@@ -19,7 +26,12 @@ def run_threaded(job_func):
     job_thread.start()
 
 
-scheduleObject6 = schedule.every(5).seconds.do(job, 1).tag('Agent1')
+config = json.loads(open(config_path).read())
+pprint.pprint(config)
+for agent in config['agents']:
+    pprint.pprint(agent)
+
+scheduleObject = schedule.every(5).seconds.do(job, 1).tag('1a')
 
 while True:
     schedule.run_pending()

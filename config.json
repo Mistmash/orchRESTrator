@@ -1,0 +1,23 @@
+{
+  "agents": [
+    {
+      "id": "1",
+      "jobs": [
+        {
+          "tag": "a",
+          "increment": "0",
+          "magnitude": "5"
+        },
+        {
+          "tag": "b",
+          "increment": "1",
+          "magnitude": "1"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "jobs": []
+    }
+  ]
+}
