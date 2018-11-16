@@ -5,19 +5,33 @@
       "jobs": [
         {
           "tag": "a",
-          "increment": "0",
-          "magnitude": "5"
+          "every": "second",
+          "interval": "5"
         },
         {
           "tag": "b",
-          "increment": "1",
-          "magnitude": "1"
+          "every": "minute"
         }
       ]
     },
     {
       "id": "2",
       "jobs": []
+    },
+    {
+      "id": "3",
+      "jobs": [
+        {
+          "tag": "a",
+          "every": "sunday",
+          "time": "12:01"
+        },
+        {
+          "tag": "b",
+          "every": "monday",
+          "time": "06:00"
+        }
+      ]
     }
   ]
 }

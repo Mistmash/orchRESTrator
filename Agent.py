@@ -1,18 +1,20 @@
+import pprint
+
+
 class Agent:
 
-    def __init__(self, ID, jobs):
-        self.ID = ID
-        # int
-        self.jobs = jobs
-        # array of job objects
+    def __init__(self, id):
+        # Agents have an identifier and a list of jobs
+        self.id = id
+        self.jobs = []
 
-    def listJobs(self):
+    def getJobs(self):
         # list the scheduled jobs for this agent
-        print()
+        return self.jobs
 
-    def addJob(self):
-        # add a new scheduled job
-        print()
+    def addJob(self, job):
+        # add a new job to list
+        self.jobs.append(job)
 
     def removeJob(self, tag):
         # remove the specifically tagged job from this agent
