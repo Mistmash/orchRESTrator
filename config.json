@@ -10,7 +10,13 @@
         },
         {
           "tag": "b",
-          "every": "minute"
+          "every": "second",
+          "interval": "10"
+        },
+        {
+          "tag": "c",
+          "every": "second",
+          "interval": "15"
         }
       ]
     },

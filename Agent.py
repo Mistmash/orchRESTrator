@@ -8,14 +8,17 @@ class Agent:
         self.id = id
         self.jobs = []
 
-    def getJobs(self):
+    def get_jobs(self):
         # list the scheduled jobs for this agent
         return self.jobs
 
-    def addJob(self, job):
+    def add_job(self, job):
         # add a new job to list
         self.jobs.append(job)
 
-    def removeJob(self, tag):
+    def remove_job(self, remove_tag):
         # remove the specifically tagged job from this agent
-        print()
+        for job in self.jobs:
+            if(job.tag == remove_tag):
+                # unschedule job
+                self.jobs.remove(job)

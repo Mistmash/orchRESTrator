@@ -18,7 +18,4 @@ class Job:
         print()
 
     def toString(self):
-        if self.time == None:
-            return("{'tag': '%d', 'incrememnt': '%d', 'interval': '%d'}" % (self.tag, self.every, self.interval))
-        else:
-            return("{'tag': '%d', 'every': '%d', 'time': '%d'}" % (self.tag, self.every, self.time))
+        return("{'tag': '%s', 'every': '%s', 'interval': '%s', 'time': '%s'}" % (self.tag, self.every, self.interval, self.time))

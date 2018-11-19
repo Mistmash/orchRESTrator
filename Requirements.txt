@@ -1,4 +1,6 @@
-Orchestration Tool to Schedule requests to a cluster of RESTful APIs
+
+--- Orchestration Tool to Schedule requests to a cluster of RESTful APIs ---
+
 
 Functional Requirements
 
@@ -8,18 +10,29 @@ Functional Requirements
 	- Last- HTTP GET retrieves the outcome of last test stored in cache on the agent.
 	- Clean- HTTP GET triggers a celanup of the agent to reset it after error.
 	- Requests should be able to run in parallel, single thread for each request.
+	- Requests should wait an amount of time for the response and return an error if they are left to hang for too long.
+
 	Scheduling
 	- App must be able to schedule calls to go out at specific times on repeat.
 	- Schedule must be able to persist through app restarting.
 	- Schedule must be configurable: create, delete, clear etc.
+	- Must be able to request and view schedule on demand.
+
 	Logging
 	- App must be able to store retrurned outcomes from requests to agents.
 	- Logs must persist through restart.
+
+
 Non-Functional Requirements
 
 	Front End
 	- The app should be configurable through a front end web interface.
+	- Interfacce must allow user to view schedules
+	- Interface must allow users to create jobs
+	- Interface must allow users to delete jobs
+	- Interface must allow users to create agents
+	- Interface must allow users to delete agents
+	- Interface must allow users to force a request to an agent
 
-
-Questions to ask
+Questions to ask:
 Does a single agent need to support multiple schedules?
