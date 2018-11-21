@@ -1,0 +1,22 @@
+<html>
+  {% if agent == None %}
+  <head>
+    <title>OrchREST-Agent Not Found</title>
+  </head>
+  <body>
+    <h1>The agent specified cannot be found:</h1>
+    <div><p>List of agents here...</p></div>
+  </body>
+  {% else %}
+  <head>
+    <title>OrchREST-Agent {{ agent.id }}</title>
+  </head>
+  <body>
+    <h1>List of current active agents:</h1>
+    <div>
+      <p>Agent: {{ agent.id }} has scheduled jobs:</p>
+      {% for job in agent.jobs%} <b>{{ job.toString() }}</b> {% endfor %}
+    </div>
+  </body>
+  {% endif %}
+</html>

@@ -5,8 +5,14 @@ import threading
 import json
 import os
 import pprint
+import sys
+from flask import Flask
+from flask import render_template
+# Project Classes
 from Agent import Agent
 from Job import Job
+
+app = Flask(__name__)
 
 # Get the path to the agent config file
 config_path = os.path.dirname(os.path.realpath(__file__)) + "\config.json"
@@ -31,22 +37,22 @@ every_command = dict(
 
 def agent_request(type, agent_ID):
     # HTTP Get Request method takes type [test/last/clean] and amkes a call to the server
-    URL = "http://127.0.0.1:5000/"
+    URL = "http://127.0.0.1:5001/"
     if(type == "test"):
         URL += "test"
-        print("Making request to %s agent is %d" % (URL, agent_ID))
+        print("Making request to %s agent is %s" % (URL, agent_ID))
         print("Thread: %s" % threading.current_thread())
         r = requests.get(URL)
         print(r.text)
     elif(type == "last"):
         URL += "last"
-        print("Making request to %s agent is %d" % (URL, agent_ID))
+        print("Making request to %s agent is %s" % (URL, agent_ID))
         print("Thread: %s" % threading.current_thread())
         r = requests.get(URL)
         print(r.text)
     elif(type == "clean"):
         URL += "clean"
-        print("Making request to %s agent is %d" % (URL, agent_ID))
+        print("Making request to %s agent is %s" % (URL, agent_ID))
         print("Thread: %s" % threading.current_thread())
         r = requests.get(URL)
         print(r.text)
@@ -55,7 +61,7 @@ def agent_request(type, agent_ID):
         print("error")
 
 
-def run_threaded(agent_request_function, type, agent_ID):
+def run_threaded(agent_request_func, type, agent_ID):
     # Threaded call to the agent_request method
     request_thread = threading.Thread(
         target=agent_request, args=([type, agent_ID]))
@@ -72,8 +78,8 @@ def schedule_job(job, agent_id):
         schedule_command += every_command[job.every][1]
     if(job.time != None):
         schedule_command += ".at('" + str(job.time) + "')"
-    schedule_command += (".do(run_threaded, agent_request, 'test', " +
-                         str(agent_id) + ")" + ".tag('" + str(agent_id) + str(job.tag) + "')")
+    schedule_command += (".do(run_threaded, agent_request, 'test', '" +
+                         str(agent_id) + "')" + ".tag('" + str(agent_id) + str(job.tag) + "')")
     print("Job Scheduled: " + schedule_command)
     eval(schedule_command)
 
@@ -103,14 +109,78 @@ def load_agents_from_config(config_path):
             new_agent.add_job(new_job)
 
 
+""" class Backend_Worker(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+        # A flag to notify the thread that it should finish up and exit
+        self.kill_received = False
+
+    def run(self):
+        while not self.kill_received:
+            # Run all pending jobs on a 1 second tick
+            schedule.run_pending()
+            time.sleep(1) """
+
+
+def run_backend():
+    # Main loop
+    while (True):
+        # Run all pending jobs on a 1 second tick
+        schedule.run_pending()
+        time.sleep(1)
+
+
+@app.route("/", methods=["GET"])
+# Index where root of the app is ran and started
+def index():
+    return render_template("root.html", name="sam")
+
+
+@app.route("/agents/", methods=["GET"])
+def list_agents():
+    # List all agents here
+    agents_list = ""
+    for agent in agents:
+        agents_list += (agent.id + " ")
+    return render_template("list_agents.html", agents=agents)
+
+
+@app.route("/agents/delete")
+def delete_agent():
+    #
+    return
+
+
+@app.route("/agents/create")
+def create_agent():
+
+    return
+
+
+@app.route("/agents/<string:agent_id>/")
+def show_agent(agent_id):
+    for agent in agents:
+        if (agent.id == agent_id):
+            return render_template("show_agent.html", agent=agent)
+    return render_template("show_agent.html", agent=None)
+
+
+# @app.route("/agents/<string:agent_id>/<integer:job>/")
+# def delete_agenshow_jobt(agent_id):
+#    return
+
+
 # Startup load config and schedule all jobs from it
 load_agents_from_config(config_path)
 for agent in agents:
     for job in agent.jobs:
         schedule_job(job, agent.id)
 
-# Main loop
-while True:
-    # Run all pending jobs on a 1 second tick
-    schedule.run_pending()
-    time.sleep(1)
+if __name__ == "__main__":
+    backend_thread = threading.Thread(target=run_backend)  # Backend_Worker()
+    backend_thread.daemon = True
+    backend_thread.start()
+    # try:
+    app.run()
+    # except KeyboardInterrupt:
+    #backend_thread.kill_recieved = True

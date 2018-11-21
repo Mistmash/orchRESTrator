@@ -1,39 +1,39 @@
 {
   "agents": [
     {
-      "id": "1",
+      "id": "alpha",
       "jobs": [
         {
-          "tag": "a",
+          "tag": "1",
           "every": "second",
           "interval": "5"
         },
         {
-          "tag": "b",
+          "tag": "2",
           "every": "second",
           "interval": "10"
         },
         {
-          "tag": "c",
+          "tag": "3",
           "every": "second",
           "interval": "15"
         }
       ]
     },
     {
-      "id": "2",
+      "id": "beta",
       "jobs": []
     },
     {
-      "id": "3",
+      "id": "charlie",
       "jobs": [
         {
-          "tag": "a",
+          "tag": "1",
           "every": "sunday",
           "time": "12:01"
         },
         {
-          "tag": "b",
+          "tag": "2",
           "every": "monday",
           "time": "06:00"
         }

@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <title>OrchREST-Agents</title>
+  </head>
+  <body>
+    <h1>List of current active agents:</h1>
+    {% for agent in agents %}
+    <div>
+      <p>Agent: {{ agent.id }} has scheduled jobs:</p>
+      {% for job in agent.jobs%} <b>{{ job.toString() }}</b> {% endfor %}
+    </div>
+    {% endfor %}
+  </body>
+</html>
