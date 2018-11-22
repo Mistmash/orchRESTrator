@@ -1,0 +1,264 @@
+{
+  "agents": [
+    {
+      "id": "alpha",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "second",
+          "interval": "5"
+        }
+      ]
+    },
+    {
+      "id": "beta",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "second",
+          "interval": "10"
+        }
+      ]
+    },
+    {
+      "id": "charlie",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "second",
+          "interval": "15"
+        }
+      ]
+    },
+    {
+      "id": "delta",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "echo",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "foxtrot",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "golf",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "hotel",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "indigo",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "juliet",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "kilo",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "lima",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "mike",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "november",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "oscar",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "papa",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "quebec",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "romeo",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "sierra",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "tango",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "unicorn",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "victor",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "whiskey",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "xray",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "yankie",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    },
+    {
+      "id": "zulu",
+      "jobs": [
+        {
+          "tag": "1",
+          "every": "week",
+          "interval": "6"
+        }
+      ]
+    }
+  ]
+}

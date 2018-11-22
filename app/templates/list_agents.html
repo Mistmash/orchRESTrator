@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <title>OrchREST-Agents</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/orchestrator.css') }}"
+    />
+  </head>
+  <body>
+    <h1 align="center">List of current active agents</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 offset-sm-2">
+          <table class="agents_table table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>Agent ID</th>
+                <th>Every</th>
+                <th>Interval</th>
+                <th>Time</th>
+                <th>Functions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for agent in agents %} {% for job in agent.jobs%}
+              <tr>
+                <th>{{ agent.id }}</th>
+                <td>{{ job.every }}</td>
+                <td>{{ job.interval }}</td>
+                <td>{{ job.time }}</td>
+                <td>
+                  <a href="/agents/{{ agent.id }}" class="btn btn-warning"
+                    >Edit</a
+                  >
+                  <a href="/agents/{{ agent.id }}" class="btn btn-danger"
+                    >Delete</a
+                  >
+                </td>
+              </tr>
+              {% endfor %} {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

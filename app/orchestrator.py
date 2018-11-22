@@ -6,13 +6,20 @@ import json
 import os
 import pprint
 import sys
+import re
 from flask import Flask
 from flask import render_template
+from flask import request
 # Project Classes
 from Agent import Agent
 from Job import Job
 
 app = Flask(__name__)
+app.config["FLASK3_FILEPATH_HEADERS"] = {
+    r".css$": {
+        "Content-Type": "text/css",
+    }
+}
 
 # Get the path to the agent config file
 config_path = os.path.dirname(os.path.realpath(__file__)) + "\config.json"
@@ -71,7 +78,7 @@ def run_threaded(agent_request_func, type, agent_ID):
 def schedule_job(job, agent_id):
     # Create a schedule command for the Job passed
     schedule_command = ("schedule." + every_command[job.every][0])
-    if (job.interval != 0):
+    if ((job.interval != 0) | (job.interval != 1)):
         schedule_command += (str(job.interval) +
                              every_command[job.every][1] + "s")
     else:
@@ -99,7 +106,7 @@ def load_agents_from_config(config_path):
         agents.append(new_agent)
         for job in agent["jobs"]:
             # For each Job in each Agent in the config, create a Job object
-            x, y = 0, None
+            x, y = 1, None
             if ("interval" in job):
                 x = job["interval"]
             if ("time" in job):
@@ -122,11 +129,18 @@ def load_agents_from_config(config_path):
             time.sleep(1) """
 
 
+def valid_Job(job):
+    tag_pattern = re.compile("^\w{4,14}$")
+    #interval_pattern = re.compile("")
+    # time_pattern =
+    return True
+
+
 def run_backend():
     # Main loop
     while (True):
         # Run all pending jobs on a 1 second tick
-        schedule.run_pending()
+        # schedule.run_pending()
         time.sleep(1)
 
 
@@ -145,24 +159,19 @@ def list_agents():
     return render_template("list_agents.html", agents=agents)
 
 
-@app.route("/agents/delete")
-def delete_agent():
-    #
-    return
-
-
-@app.route("/agents/create")
-def create_agent():
-
-    return
-
-
-@app.route("/agents/<string:agent_id>/")
-def show_agent(agent_id):
+@app.route("/agents/<string:agent_id>/", methods=["GET", "POST"])
+def edit_agent(agent_id):
+    if request.method == "POST":
+        new_tag = request.form.get("tag")
+        new_every = request.form.get("every")
+        new_interval = request.form.get("interval")
+        new_time = request.form.get("time")
+        valid_Job(Job(new_tag, new_every, new_interval, new_time))
+        return "<h1> {}</h1>".format(new_tag)
     for agent in agents:
         if (agent.id == agent_id):
-            return render_template("show_agent.html", agent=agent)
-    return render_template("show_agent.html", agent=None)
+            return render_template("edit_agent.html", agent=agent)
+    return render_template("edit_agent.html", agent=None)
 
 
 # @app.route("/agents/<string:agent_id>/<integer:job>/")
@@ -183,4 +192,4 @@ if __name__ == "__main__":
     # try:
     app.run()
     # except KeyboardInterrupt:
-    #backend_thread.kill_recieved = True
+    # backend_thread.kill_recieved = True

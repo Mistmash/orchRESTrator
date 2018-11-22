@@ -1,5 +1,5 @@
 class Job:
-    def __init__(self, tag, every, interval=0, time=None):
+    def __init__(self, tag, every, interval=1, time=None):
         self.tag = tag
         #AgentID + int
         self.every = every
