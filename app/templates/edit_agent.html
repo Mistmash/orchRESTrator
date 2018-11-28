@@ -1,93 +1,118 @@
 <html>
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/orchestrator.css') }}" />
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='js/edit_agent.js') }}"></script>
   {% if agent == None %}
-  <head>
-    <title>OrchREST-404 Not Found</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/orchestrator.css') }}"
-    />
-  </head>
-  <body>
-    <h1>The agent specified cannot be found</h1>
-    <div>
-      <a
-      href="/agents/"
-      >List of agents here</a
-    ></div>
-  </body>
-  {% else %}
-  <head>
-      <title>OrchREST-{{ agent.id }}</title>
-      <link
-        rel="stylesheet"
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-        crossorigin="anonymous"
-      />
-      <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='css/orchestrator.css') }}"
-      />
-      <body>
-          <h1 align="center">List of current active agents</h1>
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-8 offset-sm-2">
-                <table class="agents_table table table-striped table-bordered">
-                  <thead>
-                    <tr>
-                      <th>Job Tag</th>
-                      <th>Every</th>
-                      <th>Interval</th>
-                      <th>Time</th>
-                      <th>Functions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for job in agent.jobs%}
-                    <form method="POST">
-                      <tr>
-                        <th>
-                          <input type="text" name="tag" value="{{ job.tag }}">
-                        </th>
-                        <td>
-                            <select name="every">
-                              <option value="second">second</option>
-                              <option value="minute">minute</option>
-                              <option value="hour">hour</option>
-                              <option value="day">day</option>
-                              <option value="week">week</option>
-                              <option value="monday">monday</option>
-                              <option value="tuesday">tuesday</option>
-                              <option value="wednesday">wednesday</option>
-                              <option value="thursday">thursday</option>
-                              <option value="friday">friday</option>
-                              <option value="saturday">saturday</option>
-                              <option value="sunday">sunday</option>
-                            </select>
-                        </td>
-                        <td>
-                            <input type="text" name="interval" value="{{ job.interval }}">
-                        </td>
-                        <td>
-                            <input type="text" name="time" value="{{ job.time }}">
-                        </td>
-                          <td><input type="submit" value="Submit">
-                        </td>
-                      </tr>
-                    </form>
-                    {% endfor %}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </body>
-  {% endif %}
+  <title>OrchREST-404 Not Found</title>
+</head>
+
+<body>
+  <h1>The agent specified cannot be found</h1>
+  <div>
+    <a href="/agents/">List of agents here</a>
+  </div>
+</body>
+{% else %}
+<title>OrchREST-{{ agent.id }}</title>
+</head>
+
+<body>
+  <h1 align="center">List of jobs for {{ agent.id }}</h1>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-8 offset-sm-2">
+        <table class="agents_table table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Job Tag</th>
+              <th>Every</th>
+              <th>Interval</th>
+              <th>Time</th>
+              <th>Functions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for job in agent.jobs %}
+              <tr>
+                <th>
+                  <input type="text" name="tag" value="{{ job.tag }}" readonly class="form-control-plaintext">
+                </th>
+                <td>
+                  <select name="every"  disabled class="form-control-plaintext inline-edit">
+                    <option value="second"{% if job.every == "second" %} selected {% endif %}>second</option>
+                    <option value="minute"{% if job.every == "minute" %} selected {% endif %}> minute</option>
+                    <option value="hour"{% if job.every == "hour" %} selected {% endif %}>hour</option>
+                    <option value="day"{% if job.every == "day" %} selected {% endif %}>day</option>
+                    <option value="week"{% if job.every == "week" %} selected {% endif %}>week</option>
+                    <option value="monday"{% if job.every == "monday" %} selected {% endif %}>monday</option>
+                    <option value="tuesday"{% if job.every == "tuesday" %} selected {% endif %}>tuesday</option>
+                    <option value="wednesday"{% if job.every == "wednesday" %} selected {% endif %}>wednesday</option>
+                    <option value="thursday"{% if job.every == "thursday" %} selected {% endif %}>thursday</option>
+                    <option value="friday"{% if job.every == "friday" %} selected {% endif %}>friday</option>
+                    <option value="saturday"{% if job.every == "saturday" %} selected {% endif %}>saturday</option>
+                    <option value="sunday"{% if job.every == "sunday" %} selected {% endif %}>sunday</option>
+                  </select>
+                </td>
+                <td>
+                  <input type="text" name="interval" value="{{ job.interval }}" readonly class="form-control-plaintext inline-edit">
+                </td>
+                <td>
+                  <input type="text" name="time" value="{{ job.time }}" readonly class="form-control-plaintext inline-edit">
+                </td>
+                <td>
+                  <button onclick="swapButton(this, '{{ agent.id }}')" class="btn table-btn edit-btn btn-primary" type="button"><i
+                  class="fa fa-edit"></i></button>
+                  <button onclick="swapButton(this, '{{ agent.id }}')" class="btn table-btn exit-btn btn-danger invisible" type="button"><i
+                  class="fa fa-times"></i></button>
+            </td>
+            </tr>
+            {% endfor %}
+            <th>
+                <input type="text" name="tag" value="" class="form-control">
+              </th>
+              <td>
+                <select name="every" class="form-control inline-edit">
+                  <option value="second">second</option>
+                  <option value="minute"> minute</option>
+                  <option value="hour">hour</option>
+                  <option value="day">day</option>
+                  <option value="week">week</option>
+                  <option value="monday">monday</option>
+                  <option value="tuesday">tuesday</option>
+                  <option value="wednesday">wednesday</option>
+                  <option value="thursday">thursday</option>
+                  <option value="friday">friday</option>
+                  <option value="saturday">saturday</option>
+                  <option value="sunday">sunday</option>
+                </select>
+              </td>
+              <td>
+                <input type="text" name="interval" value="" class="form-control inline-edit">
+              </td>
+              <td>
+                <input type="text" name="time" value="" class="form-control inline-edit">
+              </td>
+              <td>
+                <button onclick="createButton(this)" class="btn table-btn edit-btn btn-primary" type="button"><i
+                class="fa fa-edit"></i></button>
+          </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+{% endif %}
+
 </html>

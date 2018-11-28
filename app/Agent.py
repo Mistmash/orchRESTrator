@@ -22,3 +22,15 @@ class Agent:
             if(job.tag == remove_tag):
                 # unschedule job
                 self.jobs.remove(job)
+                return True
+        return False
+
+    def toString(self):
+        string = '{"id": "' + self.id + '", "jobs": ['
+        for job in self.jobs:
+            string += job.toString()
+            string += ","
+        if len(self.jobs) != 0:
+            string = string[:-1]
+        string += ']}'
+        return string

@@ -1,5 +1,5 @@
 class Job:
-    def __init__(self, tag, every, interval=1, time=None):
+    def __init__(self, tag, every, interval=1, time="None"):
         self.tag = tag
         #AgentID + int
         self.every = every
@@ -18,4 +18,4 @@ class Job:
         print()
 
     def toString(self):
-        return("{'tag': '%s', 'every': '%s', 'interval': '%s', 'time': '%s'}" % (self.tag, self.every, self.interval, self.time))
+        return('{"tag": "%s", "every": "%s", "interval": "%s", "time": "%s"}' % (self.tag, self.every, self.interval, self.time))

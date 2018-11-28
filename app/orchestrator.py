@@ -23,6 +23,8 @@ app.config["FLASK3_FILEPATH_HEADERS"] = {
 
 # Get the path to the agent config file
 config_path = os.path.dirname(os.path.realpath(__file__)) + "\config.json"
+# Pull config file
+config = json.loads(open(config_path).read())
 agents = []
 
 # Dictionary equating 'every' to code snippets for schedule-command construction
@@ -42,36 +44,20 @@ every_command = dict(
 )
 
 
-def agent_request(type, agent_ID):
+def agent_request(subdomain, agent_ID):
     # HTTP Get Request method takes type [test/last/clean] and amkes a call to the server
     URL = "http://127.0.0.1:5001/"
-    if(type == "test"):
-        URL += "test"
-        print("Making request to %s agent is %s" % (URL, agent_ID))
-        print("Thread: %s" % threading.current_thread())
-        r = requests.get(URL)
-        print(r.text)
-    elif(type == "last"):
-        URL += "last"
-        print("Making request to %s agent is %s" % (URL, agent_ID))
-        print("Thread: %s" % threading.current_thread())
-        r = requests.get(URL)
-        print(r.text)
-    elif(type == "clean"):
-        URL += "clean"
-        print("Making request to %s agent is %s" % (URL, agent_ID))
-        print("Thread: %s" % threading.current_thread())
-        r = requests.get(URL)
-        print(r.text)
-    else:
-        # Handle error
-        print("error")
+    URL += subdomain
+    print("Making %s request to %s agent is %s" % (subdomain, URL, agent_ID))
+    print("Thread: %s" % threading.current_thread())
+    r = requests.get(URL)
+    print(r.text)
 
 
-def run_threaded(agent_request_func, type, agent_ID):
+def run_threaded(agent_request_func, subdomain, agent_ID):
     # Threaded call to the agent_request method
     request_thread = threading.Thread(
-        target=agent_request, args=([type, agent_ID]))
+        target=agent_request, args=([subdomain, agent_ID]))
     request_thread.start()
 
 
@@ -83,7 +69,7 @@ def schedule_job(job, agent_id):
                              every_command[job.every][1] + "s")
     else:
         schedule_command += every_command[job.every][1]
-    if(job.time != None):
+    if(job.time != "None"):
         schedule_command += ".at('" + str(job.time) + "')"
     schedule_command += (".do(run_threaded, agent_request, 'test', '" +
                          str(agent_id) + "')" + ".tag('" + str(agent_id) + str(job.tag) + "')")
@@ -91,56 +77,87 @@ def schedule_job(job, agent_id):
     eval(schedule_command)
 
 
-def remove_scheduled_job(agent, job_tag):
-    # Remove a job from the schedule using the agent id and job tag to specify
-    schedule.clear(agent.id + job_tag)
-    agent.remove_job(job_tag)
-
-
-def load_agents_from_config(config_path):
-    # Pull config file, create Agent and Job objects
-    config = json.loads(open(config_path).read())
-    for agent in config["agents"]:
-        # Create an agent object for each in theconfig
-        new_agent = Agent(agent["id"])
-        agents.append(new_agent)
-        for job in agent["jobs"]:
-            # For each Job in each Agent in the config, create a Job object
-            x, y = 1, None
-            if ("interval" in job):
-                x = job["interval"]
-            if ("time" in job):
-                y = job["time"]
-            new_job = Job(job["tag"], job["every"], x, y)
-            # pprint.pprint(new_job.toString())
-            new_agent.add_job(new_job)
-
-
-""" class Backend_Worker(threading.Thread):
-    def __init__(self):
-        threading.Thread.__init__(self)
-        # A flag to notify the thread that it should finish up and exit
-        self.kill_received = False
-
-    def run(self):
-        while not self.kill_received:
-            # Run all pending jobs on a 1 second tick
-            schedule.run_pending()
-            time.sleep(1) """
-
-
-def valid_Job(job):
-    tag_pattern = re.compile("^\w{4,14}$")
-    #interval_pattern = re.compile("")
-    # time_pattern =
+def delete_job_from_agent_and_schedule(agent, job):
+    # Handle error if agent or job does not exist
+    #
+    # Remove a job from the schedule
+    schedule.clear(agent.id + job.tag)
+    # Remove the job from the agent's list of jobs
+    agent.remove_job(job.tag)
     return True
+
+
+def create_job_for_agent_and_schedule(agent, job):
+    # Handle error where agent does not exist
+    #
+    # Add the job from the agent's list of jobs
+    agent.add_job(job)
+    # Schedule the job with the scheduler
+    schedule_job(job, agent.id)
+    return True
+
+
+def edit_job_for_agent_and_schedule(agent, job):
+    # Handle error if agent or job does not exist
+    #
+    delete_job_from_agent_and_schedule(agent, job)
+    # Handle error if agent does not have this job
+    #
+    pprint.pprint(agent.toString())
+    create_job_for_agent_and_schedule(agent, job)
+    pprint.pprint(agent.toString())
+    return True
+
+
+def write_to_config():
+    newconf = '{ "agents": ['
+    for agent in agents:
+        newconf += agent.toString()
+        newconf += ","
+    newconf = newconf[:-1]
+    newconf += ']}'
+    newconf = json.loads(newconf)
+    with open(config_path, 'w') as fp:
+        json.dump(newconf, fp)
+    return True
+    # pprint.pprint(config)
+
+
+def is_job_valid(job):
+    valid = [None, None, None, None, None]
+    tag_pattern = re.compile("^\w{1,14}$")
+    if(re.match(tag_pattern, job.tag)):
+        valid[0] = True
+    else:
+        valid[0] = False
+    if(job.every in every_command):
+        valid[1] = True
+    else:
+        valid[1] = False
+    try:
+        if((int(job.interval) < 60) and (int(job.interval) >= 0)):
+            valid[2] = True
+        else:
+            valid[2] = False
+    except:
+        valid[2] = False
+    time_pattern = re.compile("^(2[0-3]|[01][0-9]):([0-5][0-9])$")
+    if(bool(re.match(time_pattern, job.time)) or (job.time == "None")):
+        valid[3] = True
+    else:
+        valid[3] = False
+    if((job.every == "second" or job.every == "minute" or job.every == "hour") and (job.time != "None")):
+        valid[4] = False
+    else:
+        valid[4] = True
+    return valid
 
 
 def run_backend():
     # Main loop
     while (True):
         # Run all pending jobs on a 1 second tick
-        # schedule.run_pending()
+        schedule.run_pending()
         time.sleep(1)
 
 
@@ -159,28 +176,44 @@ def list_agents():
     return render_template("list_agents.html", agents=agents)
 
 
-@app.route("/agents/<string:agent_id>/", methods=["GET", "POST"])
+@app.route("/agents/<string:agent_id>/", methods=["GET", "POST", "PUT", "DELETE"])
 def edit_agent(agent_id):
     if request.method == "POST":
-        new_tag = request.form.get("tag")
-        new_every = request.form.get("every")
-        new_interval = request.form.get("interval")
-        new_time = request.form.get("time")
-        valid_Job(Job(new_tag, new_every, new_interval, new_time))
-        return "<h1> {}</h1>".format(new_tag)
+        # POST request edits an existing Job, by deleting and creating a new one.
+        new_job = Job(request.json["tag"], request.json["every"],
+                      request.json["interval"], request.json["time"])
+        print(is_job_valid(new_job))
+        # Handle errors if the input is not valid
+        if(is_job_valid(new_job) == [True, True, True, True, True]):
+            for agent in agents:
+                if (agent.id == agent_id):
+                    edit_job_for_agent_and_schedule(agent, new_job)
+                    break
+        pprint.pprint(agent.toString())
+        return render_template("edit_agent.html", agent=agent)
     for agent in agents:
         if (agent.id == agent_id):
             return render_template("edit_agent.html", agent=agent)
     return render_template("edit_agent.html", agent=None)
 
 
-# @app.route("/agents/<string:agent_id>/<integer:job>/")
-# def delete_agenshow_jobt(agent_id):
-#    return
+# Create Agent and Job objects
+for agent in config["agents"]:
+    # Create an agent object for each in the config
+    new_agent = Agent(agent["id"])
+    agents.append(new_agent)
+    for job in agent["jobs"]:
+        # For each Job in each Agent in the config, create a Job object
+        x, y = 1, "None"
+        if ("interval" in job):
+            x = job["interval"]
+        if ("time" in job):
+            y = job["time"]
+        new_job = Job(job["tag"], job["every"], x, y)
+        # pprint.pprint(new_job.toString())
+        new_agent.add_job(new_job)
 
 
-# Startup load config and schedule all jobs from it
-load_agents_from_config(config_path)
 for agent in agents:
     for job in agent.jobs:
         schedule_job(job, agent.id)
@@ -188,7 +221,8 @@ for agent in agents:
 if __name__ == "__main__":
     backend_thread = threading.Thread(target=run_backend)  # Backend_Worker()
     backend_thread.daemon = True
-    backend_thread.start()
+    # backend_thread.start()
+    write_to_config()
     # try:
     app.run()
     # except KeyboardInterrupt:

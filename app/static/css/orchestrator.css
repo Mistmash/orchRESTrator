@@ -1,5 +1,58 @@
-.edit_button {
+.form-control-plaintext {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  border-width: 1px;
 }
 
-.agents_table {
+.table-btn {
+  margin-top: 5px;
+}
+
+.popup {
+  width: 20%;
+  padding: 15px;
+  left: 0;
+  margin-left: 40%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: white;
+  position: absolute;
+  top: 15%;
+  box-shadow: 5px 5px 5px #000;
+  z-index: 10001;
+}
+
+.overlay {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 10000;
+}
+
+@media (min-width: 768px) {
+  .popup {
+    width: 66.66666666%;
+    margin-left: 16.666666%;
+  }
+}
+@media (min-width: 992px) {
+  .popup {
+    width: 50%;
+    margin-left: 25%;
+  }
+}
+@media (min-width: 1200px) {
+  .popup {
+    width: 20%;
+    margin-left: 40%;
+  }
+}
+
+.discard-btn,
+.keep-btn {
+  margin: 2px;
 }
