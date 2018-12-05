@@ -21,19 +21,19 @@
             <thead>
               <tr>
                 <th>Agent ID</th>
-                <th>Every</th>
-                <th>Interval</th>
-                <th>Time</th>
+                <th>Active Jobs</th>
+                <th>Last Run</th>
+                <th>Next Run</th>
                 <th>Functions</th>
               </tr>
             </thead>
             <tbody>
-              {% for agent in agents %} {% for job in agent.jobs%}
+              {% for agent in agents %}
               <tr>
                 <th>{{ agent.id }}</th>
-                <td>{{ job.every }}</td>
-                <td>{{ job.interval }}</td>
-                <td>{{ job.time }}</td>
+                <td>{{ agent.jobs | length }}</td>
+                <td>{{ agent.lastRun }}</td>
+                <td>{{ agent.nextRun }}</td>
                 <td>
                   <a href="/agents/{{ agent.id }}" class="btn btn-warning"
                     >Edit</a
@@ -43,7 +43,7 @@
                   >
                 </td>
               </tr>
-              {% endfor %} {% endfor %}
+              {% endfor %}
             </tbody>
           </table>
         </div>

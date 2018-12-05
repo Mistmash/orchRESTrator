@@ -70,9 +70,9 @@
                   <input type="text" name="time" value="{{ job.time }}" readonly class="form-control-plaintext inline-edit">
                 </td>
                 <td>
-                  <button onclick="swapButton(this, '{{ agent.id }}')" class="btn table-btn edit-btn btn-primary" type="button"><i
+                  <button onclick="swapButton(this)" class="btn table-btn edit-btn btn-primary" type="button"><i
                   class="fa fa-edit"></i></button>
-                  <button onclick="swapButton(this, '{{ agent.id }}')" class="btn table-btn exit-btn btn-danger invisible" type="button"><i
+                  <button onclick="swapButton(this)" class="btn table-btn exit-btn btn-danger invisible" type="button"><i
                   class="fa fa-times"></i></button>
             </td>
             </tr>
@@ -103,8 +103,8 @@
                 <input type="text" name="time" value="" class="form-control inline-edit">
               </td>
               <td>
-                <button onclick="createButton(this)" class="btn table-btn edit-btn btn-primary" type="button"><i
-                class="fa fa-edit"></i></button>
+                <button onclick="createButton(this)" class="btn table-btn create-btn btn-success" type="button"><i
+                class="fa fa-plus"></i></button>
           </td>
           </tr>
           </tbody>

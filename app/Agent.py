@@ -3,10 +3,12 @@ import pprint
 
 class Agent:
 
-    def __init__(self, id):
+    def __init__(self, id, lastRun="", nextRun=""):
         # Agents have an identifier and a list of jobs
         self.id = id
         self.jobs = []
+        self.lastRun = lastRun
+        self.nextRun = nextRun
 
     def get_jobs(self):
         # list the scheduled jobs for this agent
@@ -26,7 +28,9 @@ class Agent:
         return False
 
     def toString(self):
-        string = '{"id": "' + self.id + '", "jobs": ['
+        string = '{"id": "' + self.id + '", "lastRun": "' + \
+            str(self.lastRun) + '", "nextRun": "' + \
+            str(self.nextRun) + '", "jobs": ['
         for job in self.jobs:
             string += job.toString()
             string += ","

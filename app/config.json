@@ -1,1 +1,171 @@
-{"agents": [{"id": "alpha", "jobs": [{"tag": "1", "every": "second", "interval": "5", "time": "None"}]}, {"id": "beta", "jobs": [{"tag": "1", "every": "second", "interval": "10", "time": "None"}]}, {"id": "charlie", "jobs": [{"tag": "1", "every": "second", "interval": "15", "time": "None"}]}, {"id": "delta", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "echo", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "foxtrot", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "golf", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "hotel", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "indigo", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "juliet", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "kilo", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "lima", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "mike", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "november", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "oscar", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "papa", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "quebec", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "romeo", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "sierra", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "tango", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "unicorn", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "victor", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "whiskey", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "xray", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "yankie", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}, {"id": "zulu", "jobs": [{"tag": "1", "every": "week", "interval": "6", "time": "None"}]}]}
+{
+  "agents": [
+    {
+      "id": "alpha",
+      "lastRun": "05-12-2018 16:02:19",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [
+        { "tag": "1", "every": "second", "interval": "11", "time": "None" }
+      ]
+    },
+    {
+      "id": "beta",
+      "lastRun": "05-12-2018 16:02:23",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [
+        { "tag": "1", "every": "second", "interval": "12", "time": "None" }
+      ]
+    },
+    {
+      "id": "charlie",
+      "lastRun": "05-12-2018 16:02:14",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [
+        { "tag": "1", "every": "second", "interval": "15", "time": "None" }
+      ]
+    },
+    {
+      "id": "delta",
+      "lastRun": "05-12-2018 16:02:17",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [
+        { "tag": "1", "every": "hour", "interval": "5", "time": "None" },
+        { "tag": "2", "every": "second", "interval": "9", "time": "None" }
+      ]
+    },
+    {
+      "id": "echo",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "foxtrot",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [
+        { "tag": "1", "every": "saturday", "interval": "0", "time": "None" }
+      ]
+    },
+    {
+      "id": "golf",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "2", "time": "None" }]
+    },
+    {
+      "id": "hotel",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "indigo",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "juliet",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "kilo",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "lima",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "mike",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "november",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "oscar",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "papa",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "quebec",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "romeo",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "sierra",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "tango",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "unicorn",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "victor",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "whiskey",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "xray",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "yankie",
+      "lastRun": "25-06-1993 16:20:53",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    },
+    {
+      "id": "zulu",
+      "lastRun": "2018-12-05 15:20:08",
+      "nextRun": "25-06-1993 16:20:53",
+      "jobs": [{ "tag": "1", "every": "week", "interval": "6", "time": "None" }]
+    }
+  ]
+}

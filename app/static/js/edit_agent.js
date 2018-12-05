@@ -1,4 +1,4 @@
-async function swapButton(button, agentID) {
+async function swapButton(button) {
   row = $(button.parentElement.parentElement);
   elements = $(row)
     .find("input, select")
@@ -27,15 +27,22 @@ async function swapButton(button, agentID) {
         console.log(elementJSON);
         $.ajax({
           type: "POST",
-          url: "/agents/" + agentID + "/",
+          url: location.href,
           data: JSON.stringify(elementJSON),
           contentType: "application/json; charset=utf-8",
           dataType: "json",
           success: function(data) {
-            alert(data);
+            console.log(data);
           },
-          failure: function(errMsg) {
-            alert(errMsg);
+          error: function(errMsg) {
+            console.log(errMsg.responseText);
+            for (i = 0; i < elements.length; i++) {
+              $(elements[i]).val(
+                $(elements[i].parentElement).attr("cache_value")
+              );
+            }
+            alertMsg = JSON.parse(errMsg.responseText);
+            alert(alertMsg.response.replace("$$", "\n"));
           }
         });
       }
@@ -87,6 +94,45 @@ async function swapButton(button, agentID) {
     .toggleClass("fa-save");
 }
 
+function createButton(button) {
+  row = $(button.parentElement.parentElement);
+  elements = $(row)
+    .find("input, select")
+    .toArray();
+  var elementJSON = new Object();
+  for (i = 0; i < elements.length; i++) {
+    $.extend(
+      elementJSON,
+      JSON.parse(
+        '{ "' +
+          $(elements[i]).attr("name") +
+          '" : "' +
+          $(elements[i]).val() +
+          '"}'
+      )
+    );
+  }
+  console.log(elementJSON);
+  $.ajax({
+    type: "PUT",
+    url: location.href,
+    data: JSON.stringify(elementJSON),
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function(data) {
+      console.log(data);
+    },
+    error: function(errMsg) {
+      console.log(errMsg.responseText);
+      for (i = 0; i < elements.length; i++) {
+        $(elements[i]).val($(elements[i].parentElement).attr("cache_value"));
+      }
+      alertMsg = JSON.parse(errMsg.responseText);
+      alert(alertMsg.response.replace("$$", "\n"));
+    }
+  });
+}
+
 function showPrompt(msg) {
   var p = new Promise(function(resolve, reject) {
     var dialog = $("<div/>", { class: "popup" })
@@ -116,8 +162,6 @@ function showPrompt(msg) {
   });
   return p;
 }
-
-function createButton(button) {}
 
 $(document).ready(function() {
   $("input, select").on("change keyup keydown", function(e) {
