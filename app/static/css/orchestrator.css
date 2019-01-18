@@ -1,3 +1,7 @@
+.navbar-extra {
+  color: white;
+}
+
 .form-control-plaintext {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -55,4 +59,12 @@
 .discard-btn,
 .keep-btn {
   margin: 2px;
+}
+
+.small-column {
+  width: 50%;
+}
+
+.large-column {
+  width: 100%;
 }

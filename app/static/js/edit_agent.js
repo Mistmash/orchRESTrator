@@ -48,7 +48,7 @@ async function swapButton(button) {
       }
     } else {
       if ($(row).attr("changed") !== undefined) {
-        ret = await showPrompt("There are unsaved changes");
+        ret = await showPrompt("There are unsaved changes", "Discard", "Keep");
         if (ret) {
           for (i = 0; i < elements.length; i++) {
             $(elements[i]).val(
@@ -121,6 +121,7 @@ function createButton(button) {
     dataType: "json",
     success: function(data) {
       console.log(data);
+      document.location.reload();
     },
     error: function(errMsg) {
       console.log(errMsg.responseText);
@@ -133,7 +134,50 @@ function createButton(button) {
   });
 }
 
-function showPrompt(msg) {
+async function deleteButton(button) {
+  if (
+    await showPrompt(
+      "Are you sure you want to delete this job?",
+      "Delete",
+      "Cancel"
+    )
+  ) {
+    row = $(button.parentElement.parentElement);
+    elements = $(row)
+      .find("input, select")
+      .toArray();
+    var elementJSON = new Object();
+    for (i = 0; i < elements.length; i++) {
+      $.extend(
+        elementJSON,
+        JSON.parse(
+          '{ "' +
+            $(elements[i]).attr("name") +
+            '" : "' +
+            $(elements[i]).val() +
+            '"}'
+        )
+      );
+    }
+    console.log(elementJSON);
+    $.ajax({
+      type: "DELETE",
+      url: location.href,
+      data: JSON.stringify(elementJSON),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: function(data) {
+        console.log(data);
+        document.location.reload();
+      },
+      error: function(errMsg) {
+        console.log(errMsg.responseText);
+      }
+    });
+  }
+}
+
+function showPrompt(msg, success, fail) {
   var p = new Promise(function(resolve, reject) {
     var dialog = $("<div/>", { class: "popup" })
       .append($("<p/>").html(msg))
@@ -141,7 +185,7 @@ function showPrompt(msg) {
         $("<div/>", { class: "text-right" })
           .append(
             $("<button/>", { class: "btn btn-danger discard-btn" })
-              .html("Discard")
+              .html(success)
               .on("click", function() {
                 $(".overlay").remove();
                 resolve(true);
@@ -149,7 +193,7 @@ function showPrompt(msg) {
           )
           .append(
             $("<button/>", { class: "btn btn-success keep-btn" })
-              .html("Keep")
+              .html(fail)
               .on("click", function() {
                 $(".overlay").remove();
                 resolve(false);
@@ -168,3 +212,46 @@ $(document).ready(function() {
     $(e.currentTarget.parentElement.parentElement).attr("changed", "");
   });
 });
+
+async function manualRequestButton(button, requestType) {
+  if (
+    await showPrompt("Send manual request to end point?", "Confirm", "Cancel")
+  ) {
+    row = $(button.parentElement.parentElement);
+    elements = $(row)
+      .find("input, select")
+      .toArray();
+    var elementJSON = new Object();
+    for (i = 0; i < elements.length; i++) {
+      $.extend(
+        elementJSON,
+        JSON.parse(
+          '{ "' +
+            $(elements[i]).attr("name") +
+            '" : "' +
+            $(elements[i]).val() +
+            '"}'
+        )
+      );
+    }
+    $.extend(
+      elementJSON,
+      JSON.parse('{ "requestType" : "' + requestType + '"}')
+    );
+    console.log(elementJSON);
+    $.ajax({
+      type: "POST",
+      url: location.href,
+      data: JSON.stringify(elementJSON),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: function(data) {
+        console.log(data);
+        document.location.reload();
+      },
+      error: function(errMsg) {
+        console.log(errMsg.responseText);
+      }
+    });
+  }
+}

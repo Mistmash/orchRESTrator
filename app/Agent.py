@@ -3,23 +3,21 @@ import pprint
 
 class Agent:
 
-    def __init__(self, id, lastRun="", nextRun=""):
-        # Agents have an identifier and a list of jobs
+    def __init__(self, id, lastRun="", nextRun="", response=""):
+        # Constructor
         self.id = id
         self.jobs = []
         self.lastRun = lastRun
         self.nextRun = nextRun
-
-    def get_jobs(self):
-        # list the scheduled jobs for this agent
-        return self.jobs
+        self.isRunning = False
+        self.response = response
 
     def add_job(self, job):
-        # add a new job to list
+        # Add a new job to list
         self.jobs.append(job)
 
     def remove_job(self, remove_tag):
-        # remove the specifically tagged job from this agent
+        # Remove the specifically tagged job from this agent return false if job does not exist
         for job in self.jobs:
             if(job.tag == remove_tag):
                 # unschedule job
@@ -28,9 +26,11 @@ class Agent:
         return False
 
     def toString(self):
+        # Return a string describing the agent
         string = '{"id": "' + self.id + '", "lastRun": "' + \
             str(self.lastRun) + '", "nextRun": "' + \
-            str(self.nextRun) + '", "jobs": ['
+            str(self.nextRun) + '", "response": "' + \
+            str(self.response) + '", "jobs": ['
         for job in self.jobs:
             string += job.toString()
             string += ","

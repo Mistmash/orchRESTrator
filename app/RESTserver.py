@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_restful import Api, Resource, reqparse
+from random import *
 import time
 import pprint
 import datetime
@@ -7,8 +8,6 @@ import datetime
 app = Flask(__name__)
 
 # This app is used to replicate the agent behaviour
-
-# Set a cache for the agent
 tests = [
     {
         "Status": "Complete",
@@ -24,15 +23,14 @@ tests = [
     }
 ]
 
-# Called when GET request to /test url recieved
-
 
 @app .route('/test')
 # Do some work for x amount of time
 def runTest():
-    for x in range(1, 5):
+    x = randint(1, 9)
+    for i in range(1, x):
         time.sleep(10)
-        print("Working for %d0 seconds..." % x)
+        print("Working for %d0 seconds of %d0..." % (i, x))
     # Generate a dict based on the test ran
     testResult = {
         "Status": "Complete",
@@ -46,20 +44,16 @@ def runTest():
     # Return HTTP GET response to the app
     return str(tests[0]), 200
 
-# Called when GET request to /last url recieved
-
 
 @app .route('/last')
 def getLast():
     # Return the most recent addition to the cache
     return tests[0], 200
-    # return
-
-# Called when GET request to /clean url recieved
 
 
 @app .route('/clean')
 def cleanup():
+    # Stop currently running scripts and try and reset application
     # Return success or fail
     now = datetime.datetime.now()
     cleanup_response = {

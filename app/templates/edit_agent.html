@@ -23,14 +23,33 @@
   </div>
 </body>
 {% else %}
-<title>OrchREST-{{ agent.id }}</title>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Orchestrator:</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/agents/">Agents</a>
+      </li>
+    </ul>
+    <span class="navbar-text">
+      Displaying scheduled requests for {{ agent.id }} end point
+    </span>
+  </div>
+</nav>
 </head>
 
 <body>
-  <h1 align="center">List of jobs for {{ agent.id }}</h1>
+  <h1 align="center" class="display-4">{{ agent.id }}</h1>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-8 offset-sm-2">
+      <div class="col-sm-10 offset-sm-1">
         <table class="agents_table table table-striped table-bordered">
           <thead>
             <tr>
@@ -43,75 +62,106 @@
           </thead>
           <tbody>
             {% for job in agent.jobs %}
-              <tr>
-                <th>
-                  <input type="text" name="tag" value="{{ job.tag }}" readonly class="form-control-plaintext">
-                </th>
-                <td>
-                  <select name="every"  disabled class="form-control-plaintext inline-edit">
-                    <option value="second"{% if job.every == "second" %} selected {% endif %}>second</option>
-                    <option value="minute"{% if job.every == "minute" %} selected {% endif %}> minute</option>
-                    <option value="hour"{% if job.every == "hour" %} selected {% endif %}>hour</option>
-                    <option value="day"{% if job.every == "day" %} selected {% endif %}>day</option>
-                    <option value="week"{% if job.every == "week" %} selected {% endif %}>week</option>
-                    <option value="monday"{% if job.every == "monday" %} selected {% endif %}>monday</option>
-                    <option value="tuesday"{% if job.every == "tuesday" %} selected {% endif %}>tuesday</option>
-                    <option value="wednesday"{% if job.every == "wednesday" %} selected {% endif %}>wednesday</option>
-                    <option value="thursday"{% if job.every == "thursday" %} selected {% endif %}>thursday</option>
-                    <option value="friday"{% if job.every == "friday" %} selected {% endif %}>friday</option>
-                    <option value="saturday"{% if job.every == "saturday" %} selected {% endif %}>saturday</option>
-                    <option value="sunday"{% if job.every == "sunday" %} selected {% endif %}>sunday</option>
-                  </select>
-                </td>
-                <td>
-                  <input type="text" name="interval" value="{{ job.interval }}" readonly class="form-control-plaintext inline-edit">
-                </td>
-                <td>
-                  <input type="text" name="time" value="{{ job.time }}" readonly class="form-control-plaintext inline-edit">
-                </td>
-                <td>
-                  <button onclick="swapButton(this)" class="btn table-btn edit-btn btn-primary" type="button"><i
-                  class="fa fa-edit"></i></button>
-                  <button onclick="swapButton(this)" class="btn table-btn exit-btn btn-danger invisible" type="button"><i
-                  class="fa fa-times"></i></button>
-            </td>
-            </tr>
-            {% endfor %}
-            <th>
-                <input type="text" name="tag" value="" class="form-control">
+            <tr>
+              <th>
+                <input type="text" name="tag" value="{{ job.tag }}" readonly class="form-control-plaintext">
               </th>
               <td>
-                <select name="every" class="form-control inline-edit">
-                  <option value="second">second</option>
-                  <option value="minute"> minute</option>
-                  <option value="hour">hour</option>
-                  <option value="day">day</option>
-                  <option value="week">week</option>
-                  <option value="monday">monday</option>
-                  <option value="tuesday">tuesday</option>
-                  <option value="wednesday">wednesday</option>
-                  <option value="thursday">thursday</option>
-                  <option value="friday">friday</option>
-                  <option value="saturday">saturday</option>
-                  <option value="sunday">sunday</option>
+                <select name="every" disabled class="form-control-plaintext inline-edit">
+                  <option value="second" {% if job.every=="second" %} selected {% endif %}>second</option>
+                  <option value="minute" {% if job.every=="minute" %} selected {% endif %}> minute</option>
+                  <option value="hour" {% if job.every=="hour" %} selected {% endif %}>hour</option>
+                  <option value="day" {% if job.every=="day" %} selected {% endif %}>day</option>
+                  <option value="week" {% if job.every=="week" %} selected {% endif %}>week</option>
+                  <option value="monday" {% if job.every=="monday" %} selected {% endif %}>monday</option>
+                  <option value="tuesday" {% if job.every=="tuesday" %} selected {% endif %}>tuesday</option>
+                  <option value="wednesday" {% if job.every=="wednesday" %} selected {% endif %}>wednesday</option>
+                  <option value="thursday" {% if job.every=="thursday" %} selected {% endif %}>thursday</option>
+                  <option value="friday" {% if job.every=="friday" %} selected {% endif %}>friday</option>
+                  <option value="saturday" {% if job.every=="saturday" %} selected {% endif %}>saturday</option>
+                  <option value="sunday" {% if job.every=="sunday" %} selected {% endif %}>sunday</option>
                 </select>
               </td>
               <td>
-                <input type="text" name="interval" value="" class="form-control inline-edit">
+                <input type="text" name="interval" value="{{ job.interval }}" readonly class="form-control-plaintext inline-edit">
               </td>
               <td>
-                <input type="text" name="time" value="" class="form-control inline-edit">
+                <input type="text" name="time" value="{{ job.time }}" readonly class="form-control-plaintext inline-edit">
               </td>
               <td>
-                <button onclick="createButton(this)" class="btn table-btn create-btn btn-success" type="button"><i
-                class="fa fa-plus"></i></button>
-          </td>
-          </tr>
+                <button onclick="deleteButton(this)"
+                class="btn table-btn btn-danger"
+                type="button"
+                data-toggle="tooltip"
+                title="Delete"
+                data-placement="top">
+                  <i class="fa fa-times"></i>
+                </button>
+                <button onclick="swapButton(this)"
+                class="btn table-btn edit-btn btn-primary"
+                type="button"
+                data-toggle="tooltip"
+                title="Edit Schedule"
+                data-placement="top">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button onclick="swapButton(this)"
+                class="btn table-btn exit-btn btn-warning invisible"
+                type="button"
+                data-toggle="tooltip"
+                title="Undo"
+                data-placement="right"
+                ><i
+                    class="fa fa-undo"></i></button>
+              </td>
+            </tr>
+            {% endfor %}
+            <th>
+              <input type="text" name="tag" value="" class="form-control">
+            </th>
+            <td>
+              <select name="every" class="form-control inline-edit">
+                <option value="second">second</option>
+                <option value="minute"> minute</option>
+                <option value="hour">hour</option>
+                <option value="day">day</option>
+                <option value="week">week</option>
+                <option value="monday">monday</option>
+                <option value="tuesday">tuesday</option>
+                <option value="wednesday">wednesday</option>
+                <option value="thursday">thursday</option>
+                <option value="friday">friday</option>
+                <option value="saturday">saturday</option>
+                <option value="sunday">sunday</option>
+              </select>
+            </td>
+            <td>
+              <input type="text" name="interval" value="" class="form-control inline-edit">
+            </td>
+            <td>
+              <input type="text" name="time" value="" class="form-control inline-edit">
+            </td>
+            <td>
+              <button onclick="createButton(this)"
+              class="btn table-btn create-btn btn-success"
+              type="button"
+              data-toggle="tooltip"
+              title="New Schedule"
+              data-placement="top">
+                <i class="fa fa-plus"></i>
+              </button>
+            </td>
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
+  <script>
+    $(document).ready(function() {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+  </script>
 </body>
 {% endif %}
 
