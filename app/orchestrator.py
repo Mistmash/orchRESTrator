@@ -234,8 +234,8 @@ def index():
 def list_agents():
     if request.method == "POST":
         resp = ""
-        print(request.json["id"])
-        print(request.json["requestType"])
+        #print(request.json["id"])
+        #print(request.json["requestType"])
         for agent in agents:
             if agent.id == request.json["id"]:
                 if (request.json["requestType"] == "1"):

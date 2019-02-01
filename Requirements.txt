@@ -1,38 +1,50 @@
-
---- Orchestration Tool to Schedule requests to a cluster of RESTful APIs ---
+Orchestration Tool to Schedule requests to a cluster of RESTful APIs
 
 
 Functional Requirements
 
 	Restful Calls
-	- App must be able to handle three requests: Start, Last, Clean to each agent.
-	- Start- HTTP GET initiates a test run on the agent and app waits to recieve outcome.
-	- Last- HTTP GET retrieves the outcome of last test stored in cache on the agent.
-	- Clean- HTTP GET triggers a celanup of the agent to reset it after error.
-	- Requests should be able to run in parallel, single thread for each request.
+	- App must be able to send three different requests: Test, Last, Clean to each end point.
+	- Test- HTTP GET initiates a test run on the end point and app waits to recieve outcome.
+	- Last- HTTP GET retrieves the outcome of last test stored in cache on the end point.
+	- Clean- HTTP GET triggers a cleanup of the end point to reset it after error.
+	- Requests should be able to run in parallel, with a single thread spawned for each request.
 	- Requests should wait an amount of time for the response and return an error if they are left to hang for too long.
+	- Responses to calls should be logged for each end point.
+	- Only one request to an endpoint should be able to run at a time.
+	- 
 
 	Scheduling
-	- App must be able to schedule calls to go out at specific times on repeat.
+	- App must be able to schedule calls to go out at second, minute, hour, day and week intervals.
+	- App must be able to schedule calls to go out at specific times of day.
+	- App must be able to schedule calls to go out on specific days of the week.
+	- Each schedule job must have an point unique identifier.
 	- Schedule must be able to persist through app restarting.
 	- Schedule must be configurable: create, delete, clear etc.
-	- Must be able to request and view schedule on demand.
+	- Users must be able to request and view schedule on demand.
+	- New schedules must be validated.
+		- No interval above 59.
+		- 24 Hour format for time.
+		- Identifier must be an alphanumeric of size 2< and <15
+	
 
 	Logging
-	- App must be able to store retrurned outcomes from requests to agents.
+	- App must be able to store response status for the requests.
+	- App must be able to store time of the requests.
 	- Logs must persist through restart.
+	- Logs must be stored in json format.
 
+	Front End
+	- Interfacce must allow user to view available end points.
+	- Interface must allow users to add new end points.
+	- Interface must allow users to delete end points.
+	- Interface must allow users to force a request to an agent.
+	- Interface must allow users to cancel a running request to an agent.
+	- Interface must allow users to view schedules of each end points.
+	- Interface must allow users to create schedule jobs.
+	- Interface must allow users to delete schedule jobs.
+	- Interface must allow users to edit schedule jobs.
 
 Non-Functional Requirements
 
-	Front End
-	- The app should be configurable through a front end web interface.
-	- Interfacce must allow user to view schedules
-	- Interface must allow users to create jobs
-	- Interface must allow users to delete jobs
-	- Interface must allow users to create agents
-	- Interface must allow users to delete agents
-	- Interface must allow users to force a request to an agent
-
-Questions to ask:
-Does a single agent need to support multiple schedules?
+	

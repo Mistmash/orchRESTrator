@@ -30,12 +30,12 @@ The back end uses the Daniel Bader's schedule libaray found at https://schedule.
 
 #### Functions:
 
-        addJob
-            Takes a job and adds it to Agent's list of jobs
-        removeJob
-            Takes a job and removes it from the Agent's list of jobs
-        toString
-            Describes the agent as a json, usually to store in the config
+- addJob
+  Takes a job and adds it to Agent's list of jobs
+- removeJob
+  Takes a job and removes it from the Agent's list of jobs
+- toString
+  Describes the agent as a json, usually to store in the config
 
 ### Job
 
